@@ -11,7 +11,6 @@ const galleryImg = galleryItems.map((element) =>
      <img
         class="gallery__image"
         src="${element.preview}"
-        data-source= "${element.original}"
         alt="${element.description}"
      />
      </a>
@@ -19,12 +18,9 @@ const galleryImg = galleryItems.map((element) =>
 
 galleryEl.innerHTML = galleryImg;
 
-galleryEl.addEventListener("click", (event) => {
-    event.preventDefault();
+new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
 });
-
-// var lightbox = $('.gallery a').simpleLightbox({ 
-//     captionsData: 'alt',
-//     captionDelay: 250,
-//  });
-
+ 

@@ -4,7 +4,7 @@ console.log(galleryItems);
 
 const galleryEl = document.querySelector('.gallery');
 
-
+// markup
 const galleryImg = galleryItems.map((element) => 
   
     `<div class="gallery__item">
@@ -20,22 +20,29 @@ const galleryImg = galleryItems.map((element) =>
 
 galleryEl.innerHTML = galleryImg;
 
-galleryEl.addEventListener("click", (event) =>{
+// add eveny listener on div
+galleryEl.addEventListener("click", onImageClick);
+function onImageClick(event) {
     event.preventDefault();
 
-    const originImage = event.target.dataset.source;
-    let instance = basicLightbox.create(`
-    <img src="${originImage}" width="800" height="600">
+    // Check if it's not image
+    if (event.target.nodeName !== "IMG") {
+        return;
+    }
+
+    // else use basiclightbox 
+    const instance = basicLightbox.create(`
+    <img src="${event.target.dataset.source}" width="800" height="600">
     `);
     instance.show();
 
-});
+    // close 
+    galleryEl.addEventListener('keydown', onEscapeClose);
 
-galleryEl.addEventListener('keydown', onEscapeClose);
-
-function onEscapeClose(event) {
-  if (event.code === 'Escape') {
-    instance.close();
-  }
+    function onEscapeClose(event) {
+        if (event.code === 'Escape') {
+            instance.close();
+            galleryEl.removeEventListener('keydown', onEscapeClose);
+        }
+    };
 };
- 
